@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta - Curso de Robótica Básica</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f0f8ff;
+            background-image: url('fondo-alegre.png'); /* Fondo alegre (cambia el nombre según tu imagen) */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        input {
+            font-size: 1em;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 20px;
+            width: 50%; /* Ancho inicial en porcentaje */
+            max-width: 1200px; /* Ancho máximo fijo en píxeles */
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center; /* Centra todos los elementos en el contenedor */
+            align-items: center; /* Alinea verticalmente los elementos en el centro */
+            gap: 60px; /* Espacio entre los elementos */
+        }
+
+        .choices img {
+            width: 100px;
+            cursor: pointer;
+        }
+
+        #progreso {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        #barra {
+            height: 100%;
+            width: 0;
+            background-color: #4caf50;
+            transition: width 0.3s;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #enviar {
+            display: none;
+        }
+    </style>
+</head>
+<!-- fuente start -->
+
+<div class="font-size-controls">
+    <img src="sumar.png" alt="Aumentar tamaño de letra" id="aumentarLetra" style="cursor: pointer; width: 30px;">
+    <img src="restar.png" alt="Disminuir tamaño de letra" id="disminuirLetra" style="cursor: pointer; width: 30px;">
+</div>
+
+<style>
+    .font-size-controls {
+        position: fixed;
+        top: 10px;  /* Ajusta la distancia desde la parte superior */
+        left: 10px; /* Ajusta la distancia desde el lado izquierdo */
+        z-index: 1000;  /* Asegura que se superponga sobre otros elementos */
+        display: flex;
+        gap: 10px;  /* Espacio entre los iconos */
+    }
+</style>
+
+
+
+
+<script>
+    let fontSize = 1.2;  // Tamaño de letra inicial en "em"
+    const maxFontSize = 2.2;  // Tamaño máximo permitido
+    const minFontSize = 1;  // Tamaño mínimo permitido
+    let containerWidthPercentage = 50;  // Ancho inicial del contenedor en porcentaje
+    const maxContainerWidthPercentage = 100;  // Ancho máximo permitido en porcentaje
+    const minContainerWidthPercentage = 50;   // Ancho mínimo permitido en porcentaje
+
+    document.getElementById('aumentarLetra').addEventListener('click', function () {
+        if (fontSize < maxFontSize) {
+            fontSize += 0.2;
+            document.body.style.fontSize = fontSize + 'em';
+        }
+        if (containerWidthPercentage < maxContainerWidthPercentage) {
+            containerWidthPercentage += 5;  // Aumenta el ancho en porcentaje
+            document.querySelector('.container').style.width = containerWidthPercentage + '%';
+        }
+    });
+
+    document.getElementById('disminuirLetra').addEventListener('click', function () {
+        if (fontSize > minFontSize) {
+            fontSize -= 0.2;
+            document.body.style.fontSize = fontSize + 'em';
+        }
+        if (containerWidthPercentage > minContainerWidthPercentage) {
+                containerWidthPercentage -= 5;  // Disminuye el ancho en porcentaje
+                document.querySelector('.container').style.width = containerWidthPercentage + '%';
+        }
+    });
+
+</script>
+
+
+
+<!-- fuente end -->
+<body>
+    <div class="container">
+        <h1>Encuesta para Curso de Robótica</h1>
+
+        <form id="encuesta">
+            <!-- Preguntas: Nombre Completo y Edad -->
+            <div id="pregunta0" class="pregunta">
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="nombre" name="nombre" required><br>
+
+                <label for="edad">Edad:</label>
+                <input type="number" id="edad" name="edad" min="8" max="13" required><br>
+
+                <!-- El botón que inicia la encuesta -->
+                <button type="button" id="iniciar">Iniciar Encuesta</button>
+            </div>
+
+            <!-- Preguntas interactivas con caritas -->
+            <div id="pregunta1" class="pregunta" style="display:none;">
+                <label>1. ¿Has utilizado una computadora antes?</label>
+                <div class="choices">
+                    <img src="Si.png" alt="Sí" data-value="Sí" class="carita">
+                    <img src="transparente.png" alt="Regresar" id="regresar1" class="Regresar">
+                    <img src="No.png" alt="No" data-value="No" class="carita">
+                </div>
+                <input type="hidden" name="pregunta1" required>
+            </div>
+
+            <div id="pregunta2" class="pregunta" style="display:none;">
+                <label>2. ¿Sabes encender y apagar una computadora?</label>
+                <div class="choices">
+                    <img src="Si.png" alt="Sí" data-value="Sí" class="carita">
+                    <img src="flecha-atras.png" alt="Regresar" id="regresar2" class="Regresar">
+                    <img src="No.png" alt="No" data-value="No" class="carita">
+
+                </div>
+                <input type="hidden" name="pregunta2" required>
+            </div>
+            <div id="pregunta3" class="pregunta" style="display:none;">
+                <label>3. ¿Sabes cómo usar un teclado y un mouse?</label>
+                <div class="choices">
+                    <img src="Si.png" alt="Sí" data-value="Sí" class="carita">
+                    <img src="flecha-atras.png" alt="Regresar" id="regresar3" class="Regresar">
+                    <img src="No.png" alt="No" data-value="No" class="carita">
+                </div>
+                <input type="hidden" name="pregunta3" required>
+            </div>
+            <div id="pregunta4" class="pregunta" style="display:none;">
+                <label>4. ¿Has escuchado hablar de la robótica o de los robots?</label>
+                <div class="choices">
+                    <img src="Si.png" alt="Sí" data-value="Sí" class="carita">
+                    <img src="flecha-atras.png" alt="Regresar" id="regresar4" class="Regresar">
+                    <img src="No.png" alt="No" data-value="No" class="carita">
+                </div>
+                <input type="hidden" nam690e="pregunta4" required>
+            </div>
+            <div id="pregunta5" class="pregunta" style="display:none;">
+                <label>5. ¿Te gusta resolver problemas o acertijos?</label>
+                <div class="choices">
+                    <img src="Si.png" alt="Sí" data-value="Sí" class="carita">
+                    <img src="flecha-atras.png" alt="Regresar" id="regresar5" class="Regresar">
+                    <img src="No.png" alt="No" data-value="No" class="carita">
+                </div>
+                <input type="hidden" name="pregunta5" required>
+            </div>
+            <div id="pregunta6" class="pregunta" style="display:none;">
+                <label>6. ¿Te justaria jugar y aprender al mismo tiempo?</label>
+                <div class="choices">
+                    <img src="Si.png" alt="Sí" data-value="Sí" class="carita">
+                    <img src="flecha-atras.png" alt="Regresar" id="regresar6" class="Regresar">
+                    <img src="No.png" alt="No" data-value="No" class="carita">
+                </div>
+                <input type="hidden" name="pregunta6" required>
+            </div>
+            <!-- Barra de progreso -->
+            <div id="progreso">
+                <div id="barra"></div>
+            </div>
+
+            <!-- Botón de envío que aparece al final -->
+            <button type="submit" id="enviar">Enviar Encuesta</button>
+        </form>
+    </div>
+
+    <script>
+        const preguntas = document.querySelectorAll('.pregunta');
+        const totalPreguntas = preguntas.length - 1;  // No contar la de nombre y edad
+        let preguntaActual = 0;
+
+        // Evento para iniciar la encuesta
+        document.getElementById('iniciar').addEventListener('click', function () {
+            if (document.getElementById('nombre').value !== '' && document.getElementById('edad').value !== '') {
+                mostrarSiguientePregunta();  // Si nombre y edad están llenos, inicia la encuesta
+            } else {
+                alert('Por favor, completa los campos de Nombre y Edad');
+            }
+        });
+
+        // Evento para seleccionar la respuesta
+        document.querySelectorAll('.carita').forEach(function (el) {
+            el.addEventListener('click', function () {
+                // Guardar la respuesta
+                let input = el.closest('.pregunta').querySelector('input[type="hidden"]');
+                input.value = el.getAttribute('data-value');
+
+                // Mostrar la siguiente pregunta
+                mostrarSiguientePregunta();
+            });
+        });
+
+        // Función para mostrar la siguiente pregunta
+        function mostrarSiguientePregunta() {
+            preguntas[preguntaActual].style.display = 'none';  // Ocultar la pregunta actual
+            preguntaActual++;
+
+            if (preguntaActual < preguntas.length) {
+                preguntas[preguntaActual].style.display = 'block';  // Mostrar la siguiente pregunta
+                actualizarBarraProgreso();
+            } else {
+                document.getElementById('enviar').style.display = 'block';  // Mostrar el botón de enviar al final
+            }
+        }
+
+        // Evento para seleccionar si hay que regresar
+        document.querySelectorAll('.Regresar').forEach(function (re) {
+            re.addEventListener('click', function () {
+                if (preguntaActual > 1 ) {
+                    preguntas[preguntaActual].style.display = 'none';
+                    preguntaActual -=2;
+                    mostrarSiguientePregunta();
+                }
+            });
+        });
+
+        // Función para actualizar la barra de progreso
+        function actualizarBarraProgreso() {
+            const progreso = (preguntaActual / totalPreguntas) * 100;
+            document.getElementById('barra').style.width = progreso + '%';
+        }
+
+        // Evento al enviar la encuesta
+        document.getElementById('encuesta').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+
+            fetch('https://docs.google.com/spreadsheets/d/1UL7NXnfRIxL1nqtYRocXaCFdl4wUlTiUjovxVxwfEH8/edit?usp=sharing', {
+            method: 'POST',
+            body: formData
+            })
+            .then(response => response.text())
+            .then(data => alert(data))
+            .catch(error => alert(error));
+            alert('¡Gracias por completar la encuesta!');
+        });
+        </script>
+</body>
+</html>
