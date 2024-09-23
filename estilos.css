@@ -16,6 +16,12 @@ input {
     font-size: 1em;
 }
 
+label[for="nombre"],
+label[for="edad"]{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
 .container {
     background-color: rgba(255, 255, 255, 0.5);
     padding: 20px;
@@ -63,6 +69,11 @@ label {
     width: 0;
     background-color: #4caf50;
     transition: width 0.3s;
+}
+
+#nombreSelect {
+  font-size: 20px; /* Cambia el tamaño del texto */
+  padding: 10px;   /* Agrega un poco de espacio interno */
 }
 
 button {
