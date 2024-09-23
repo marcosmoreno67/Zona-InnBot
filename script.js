@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (fontSize < maxFontSize) {
             fontSize += 0.2;
             document.body.style.fontSize = fontSize + 'em';
+            document.getElementById("nombreSelect").style.fontSize = fontSize + 'em';
         }
         if (containerWidthPercentage < maxContainerWidthPercentage) {
             containerWidthPercentage += 5;
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (fontSize > minFontSize) {
             fontSize -= 0.2;
             document.body.style.fontSize = fontSize + 'em';
+            document.getElementById("nombreSelect").style.fontSize = fontSize + 'em';
         }
         if (containerWidthPercentage > minContainerWidthPercentage) {
             containerWidthPercentage -= 5;
@@ -36,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let preguntaActual = 0;
 
     document.getElementById('iniciar').addEventListener('click', function () {
-        if (document.getElementById('nombre').value !== '' && document.getElementById('edad').value !== '') {
+        if (document.getElementById('nombreManual').value !== '' && document.getElementById('edad').value !== '') {
             mostrarSiguientePregunta();
         } else {
             alert('Por favor, completa los campos de Nombre y Edad');
@@ -96,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         const datos = {
             userId: Date.now(),
-            nombre: document.getElementById('nombre').value,
+            nombre: document.getElementById('nombreManual').value,
             edad: document.getElementById('edad').value,
             pregunta1: document.querySelector('input[name="pregunta1"]').value,
             pregunta2: document.querySelector('input[name="pregunta2"]').value,
@@ -116,3 +118,44 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const nombreSelect = document.getElementById('nombreSelect');
+    const nombreManual = document.getElementById('nombreManual');
+    // Función para verificar si la lista de nombres está vacía
+
+    function esListaVacia(nombres) {
+        // Filtramos los nombres que no sean cadenas vacías
+        const nombresValidos = nombres.filter(nombre => nombre.trim() !== "");
+        // Si no hay nombres válidos, es una lista vacía
+        return nombresValidos.length === 0;
+    }
+    // Leer archivo nombres.json usando Fetch API
+    fetch('nombres.json')
+        .then(response => response.json())
+        .then(data => {
+        const nombres    = data.nombres || [];
+        if (esListaVacia(nombres)) {
+        // Si el archivo está vacío, mostrar el campo de texto para         escribir el nombre
+            nombreManual.style.display = 'inline-block';
+            nombreSelect.style.display = 'none';
+            nombreManual.required = true;
+        } else {
+        // Si el archivo tiene datos, llenar el select con los nombres
+            nombres.forEach(nombre => {
+                if (nombre.trim() !== ""){
+                    const option = document.createElement('option');
+                    option.value = nombre;
+                    option.textContent = nombre;
+                    nombreSelect.appendChild(option);
+                }
+            });
+        }
+    })
+    .catch(error => {
+        alert("No hay archivo con Nombres")
+        nombreManual.style.display = 'inline-block';
+        nombreSelect.style.display = 'none';
+        nombreManual.required = true;
+    });
+});
+
