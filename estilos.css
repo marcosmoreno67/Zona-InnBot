@@ -95,15 +95,6 @@ button:hover {
     display: none;
 }
 
-.font-size-controls {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 1000;
-    display: flex;
-    gap: 10px;
-}
-
 #RecargarPag {
     position: absolute; /* Posiciona el div de manera absoluta */
     bottom: 2px; /* Distancia desde el fondo */
@@ -112,4 +103,13 @@ button:hover {
     width : 10%;
     height : 10%;
     cursor: pointer;
+}
+
+.font-size-controls {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
 }
