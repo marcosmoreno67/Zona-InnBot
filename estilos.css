@@ -103,3 +103,13 @@ button:hover {
     display: flex;
     gap: 10px;
 }
+
+#RecargarPag {
+    position: absolute; /* Posiciona el div de manera absoluta */
+    bottom: 2px; /* Distancia desde el fondo */
+    right: 2px; /* Distancia desde la derecha */
+    padding: 10px;
+    width : 10%;
+    height : 10%;
+    cursor: pointer;
+}
