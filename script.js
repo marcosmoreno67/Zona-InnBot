@@ -34,9 +34,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    const select = document.getElementById("nombreSelect");
+    const input = document.getElementById("nombreManual");
+    select.addEventListener('click', function() {
+        input.value = select.value;
+    });
+
     const preguntas = document.querySelectorAll('.pregunta');
     let preguntaActual = 0;
-
     document.getElementById('iniciar').addEventListener('click', function () {
         if (document.getElementById('nombreManual').value !== '' && document.getElementById('edad').value !== '') {
             mostrarSiguientePregunta();
