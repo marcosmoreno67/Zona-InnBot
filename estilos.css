@@ -16,7 +16,7 @@ input {
     font-size: 1em;
 }
 
-label[for="nombre"],
+label[for="nombreSelect"],
 label[for="edad"]{
     font-size: 1.2em;
     font-weight: bold;
