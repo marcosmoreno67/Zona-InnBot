@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const preguntas = document.querySelectorAll('.pregunta');
     let preguntaActual = 0;
     document.getElementById('iniciar').addEventListener('click', function () {
-        if (document.getElementById('nombreManual').value !== '' && document.getElementById('edad').value !== '') {
+    if (document.getElementById('nombreManual').value !== '' && document.getElementById('edad').value !== '') {
             mostrarSiguientePregunta();
         } else {
             alert('Por favor, completa los campos de Nombre y Edad');
@@ -116,6 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Enviar datos a Firebase
         set(ref(db, 'encuestas/' + datos.userId), datos)
             .then(() => {
+                document.getElementById('enviar').style.display = 'none';
                 alert('Datos guardados exitosamente');
             })
             .catch((error) => {
