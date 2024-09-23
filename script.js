@@ -118,6 +118,11 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
+
+document.getElementById("RecargarPag").addEventListener("click", function() {
+    location.reload(true); // Recargar la página
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     const nombreSelect = document.getElementById('nombreSelect');
     const nombreManual = document.getElementById('nombreManual');
