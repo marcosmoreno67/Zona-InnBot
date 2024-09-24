@@ -21,7 +21,7 @@
         function onClick(e) {
             e.preventDefault(); // Evita que el formulario se envíe inmediatamente
             grecaptcha.ready(function() {
-                grecaptcha.execute('reCAPTCHA_site_key', {action: 'submit'}).then(function(token) {
+                grecaptcha.execute('6LcF900qAAAAAH1IKHVh2hz0j5COXXEMreDE84_o', {action: 'submit'}).then(function(token) {
                     // Agregar lógica para enviar el token al servidor
                     const form = document.getElementById('miFormulario');
                     const hiddenInput = document.createElement('input'); // Crea un campo oculto
