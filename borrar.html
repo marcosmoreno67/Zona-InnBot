@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario con reCAPTCHA v3</title>
-    <script src="https://www.google.com/recaptcha/api.js?render=6LcF900qAAAAAH1IKHVh2hz0j5COXXEMreDE84_o"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=TU_CLAVE_DEL_SITIO"></script>
 </head>
 <body>
-    <form id="miFormulario">
+    <form id="miFormulario" action="token.php" method="POST"> <!-- El formulario envía datos a token.php -->
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required>
 
@@ -21,15 +21,15 @@
         function onClick(e) {
             e.preventDefault(); // Evita que el formulario se envíe inmediatamente
             grecaptcha.ready(function() {
-                grecaptcha.execute('6LcF900qAAAAAH1IKHVh2hz0j5COXXEMreDE84_o', {action: 'submit'}).then(function(token) {
+                grecaptcha.execute('TU_CLAVE_DEL_SITIO', {action: 'submit'}).then(function(token) {
                     // Agregar lógica para enviar el token al servidor
                     const form = document.getElementById('miFormulario');
-                    const hiddenInput = document.createElement('input');
+                    const hiddenInput = document.createElement('input'); // Crea un campo oculto
                     hiddenInput.setAttribute('type', 'hidden');
-                    hiddenInput.setAttribute('name', 'g-recaptcha-response');
-                    hiddenInput.setAttribute('value', token);
-                    form.appendChild(hiddenInput);
-                    form.submit(); // Envía el formulario después de agregar el token
+                    hiddenInput.setAttribute('name', 'g-recaptcha-response'); // Nombre del campo para el token
+                    hiddenInput.setAttribute('value', token); // Asigna el token obtenido
+                    form.appendChild(hiddenInput); // Agrega el campo oculto al formulario
+                    form.submit(); // Envía el formulario a token.php
                 });
             });
         }
