@@ -43,10 +43,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const preguntas = document.querySelectorAll('.pregunta');
     let preguntaActual = 0;
     document.getElementById('iniciar').addEventListener('click', function () {
-    if (document.getElementById('nombreManual').value !== '' && document.getElementById('edad').value !== '') {
-            mostrarSiguientePregunta();
+        let edadInput = document.getElementById('edad').value;
+        if (edadInput !== '' && !isNaN(edadInput)) {
+            let edad = parseInt(edadInput, 10); // Convertir a número entero
+            if (document.getElementById('nombreManual').value !== '' && edad >= 8 && edad <= 13) {
+                mostrarSiguientePregunta();
+            } else {
+                alert('La edad debe estar entre 8 y 13.');
+            }
         } else {
-            alert('Por favor, completa los campos de Nombre y Edad');
+            alert('Por favor, ingresa una edad válida.');
         }
     });
 
@@ -104,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const datos = {
             userId: Date.now(),
             nombre: document.getElementById('nombreManual').value,
-            edad: document.getElementById('edad').value,
+            edad: parseInt(document.getElementById('edad').value,10),
             pregunta1: document.querySelector('input[name="pregunta1"]').value,
             pregunta2: document.querySelector('input[name="pregunta2"]').value,
             pregunta3: document.querySelector('input[name="pregunta3"]').value,
