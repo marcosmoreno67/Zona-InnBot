@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario con reCAPTCHA v3</title>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcF900qAAAAAH1IKHVh2hz0j5COXXEMreDE84_o"></script>
+</head>
+<body>
+    <form id="miFormulario">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <button type="submit" onclick="onClick(event)">Enviar</button>
+    </form>
+
+    <script>
+        function onClick(e) {
+            e.preventDefault(); // Evita que el formulario se envíe inmediatamente
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6LcF900qAAAAAH1IKHVh2hz0j5COXXEMreDE84_o', {action: 'submit'}).then(function(token) {
+                    // Agregar lógica para enviar el token al servidor
+                    const form = document.getElementById('miFormulario');
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', 'hidden');
+                    hiddenInput.setAttribute('name', 'g-recaptcha-response');
+                    hiddenInput.setAttribute('value', token);
+                    form.appendChild(hiddenInput);
+                    form.submit(); // Envía el formulario después de agregar el token
+                });
+            });
+        }
+    </script>
+</body>
+</html>
