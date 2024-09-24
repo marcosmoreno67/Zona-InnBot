@@ -176,3 +176,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+function onClick(e) {
+    e.preventDefault();
+    grecaptcha.ready(function() {
+      grecaptcha.execute('6LcF900qAAAAAH1IKHVh2hz0j5COXXEMreDE84_o', {action: 'submit'}).then(function(token) {
+          alert("que hago aqui")// Add your logic to submit to your backend server here.
+      });
+    });
+  }
