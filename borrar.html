@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario con reCAPTCHA v3</title>
-    <script src="https://www.google.com/recaptcha/api.js?render=6LcF900qAAAAAH1IKHVh2hz0j5COXXEMreDE84_o"></script>
+   // <script src="https://www.google.com/recaptcha/api.js?render=6LcF900qAAAAAH1IKHVh2hz0j5COXXEMreDE84_o"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </head>
-<body>
-    <form id="miFormulario" action="token.php" method="POST"> <!-- El formulario envía datos a token.php -->
+<body>    
+    <form id="miFormulario" action="/submit" method="POST"> <!-- El formulario envía datos a token.php -->
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required>
 
@@ -18,21 +20,28 @@
     </form>
 
     <script>
-        function onClick(e) {
-            e.preventDefault(); // Evita que el formulario se envíe inmediatamente
-            grecaptcha.ready(function() {
-                grecaptcha.execute('6LcF900qAAAAAH1IKHVh2hz0j5COXXEMreDE84_o', {action: 'submit'}).then(function(token) {
-                    // Agregar lógica para enviar el token al servidor
-                    const form = document.getElementById('miFormulario');
-                    const hiddenInput = document.createElement('input'); // Crea un campo oculto
-                    hiddenInput.setAttribute('type', 'hidden');
-                    hiddenInput.setAttribute('name', 'g-recaptcha-response'); // Nombre del campo para el token
-                    hiddenInput.setAttribute('value', token); // Asigna el token obtenido
-                    form.appendChild(hiddenInput); // Agrega el campo oculto al formulario
-                    form.submit(); // Envía el formulario a token.php
-                });
-            });
-        }
+    document.getElementById('miFormulario').addEventListener('submit', function (e) {
+    e.preventDefault(); // Evita que el formulario se envíe inmediatamente
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LcF900qAAAAAH1IKHVh2hz0j5COXXEMreDE84_o', {action: 'submit'}).then(function(token) {
+            // Agregar el token al formulario
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'g-recaptcha-response';
+            input.value = token;
+            document.getElementById('miFormulario').appendChild(input);
+            
+            // Ahora envía el formulario
+            document.getElementById('miFormulario').submit();
+        });
+    });
+});
+
+
+
+
+
+        
     </script>
 </body>
 </html>
